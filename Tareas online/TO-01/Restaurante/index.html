@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante</title>
+</head>
+<body>
+    <h3>Registro del Restaurante</h3>
+    <form method="GET" action="restauranterespuesta.php">
+        <br>Número de la mesa:
+        <br>
+        <input type="text" name="numero" required>
+        <br>Nombre y apellidos del camarero que atiende la mesa:
+        <br>
+        <input type="text" name="nombre" required>
+        <br>Tres primeros platos a elegir (uno de ellos):
+        <br>
+        <label>
+            a) Sopa 
+            <input type="radio" name="primero" value="Sopa" required>
+        </label>
+        <label>
+            b) Ensalada 
+            <input type="radio" name="primero" value="Ensalada">
+        </label>
+        <label>
+            c) Patatas 
+            <input type="radio" name="primero" value="Patatas">
+        </label>
+        <br>Tres segundos platos a elegir (uno de ellos):
+        <br>
+        <label>
+            a) Lasaña 
+            <input type="radio" name="segundo" value="Lasaña" required>
+        </label>
+        <label>
+            b) Hamburguesa 
+            <input type="radio" name="segundo" value="Hamburguesa">
+        </label>
+        <label>
+            c) Pizza 
+            <input type="radio" name="segundo" value="Pizza">
+        </label>
+        <br>Tres bebidas a elegir (una de ellas):
+        <br>
+        <label>
+            a) Nestea 
+            <input type="radio" name="bebida" value="Nestea" required>
+        </label>
+        <label>
+            b) Lipton 
+            <input type="radio" name="bebida" value="Lipton">
+        </label>
+        <label>
+            c) Agua 
+            <input type="radio" name="bebida" value="Agua">
+        </label>
+        <br>Extras como pan, mantequilla, puro (puedes escoger los que quieras):
+        <br>
+        <label>
+            a) Mantequilla 
+            <input type="checkbox" name="extra[]" value="Mantequilla">
+        </label>
+        <label>
+            b) Pan 
+            <input type="checkbox" name="extra[]" value="Pan">
+        </label>
+        <label>
+            c) Puro 
+            <input type="checkbox" name="extra[]" value="Puro">
+        </label>
+        <br>
+        <input value="Enviar" type="submit"><br>
+    </form>
+</body>
+</html>

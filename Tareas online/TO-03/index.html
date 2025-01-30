@@ -1,0 +1,77 @@
+<?php
+$conexion = new mysqli('localhost', 'root', '', 'biblioteca');
+
+if ($conexion->connect_error) {
+    die('Error de conexión (' . $conexion->connect_errno . ') ' . $conexion->connect_error);
+}
+
+$tabla = isset($_GET['tabla']) ? $_GET['tabla'] : 'AUTORES'; // Tabla por defecto: AUTORES
+$query = "SELECT * FROM $tabla";
+$resultado = $conexion->query($query);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mantenimiento de Biblioteca</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Gestión de tablas </h1>
+
+    <form method="get">
+        <label for="tabla">Seleccionar tabla:</label>
+        <select name="tabla" id="tabla" onchange="this.form.submit()">
+            <option value="AUTORES" <?=$tabla=='AUTORES' ? 'selected' : '' ?>>Autores</option>
+            <option value="LIBROS" <?=$tabla=='LIBROS' ? 'selected' : '' ?>>Libros</option>
+            <option value="USUARIOS" <?=$tabla=='USUARIOS' ? 'selected' : '' ?>>Usuarios</option>
+            <option value="ALQUILERES" <?=$tabla=='ALQUILERES' ? 'selected' : '' ?>>Alquileres</option>
+        </select>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <?php while ($campo = $resultado->fetch_field()): ?>
+                <th>
+                    <?= htmlspecialchars($campo->name) ?>
+                </th>
+                <?php endwhile; ?>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($fila = $resultado->fetch_assoc()): ?>
+            <tr>
+                <?php foreach ($fila as $dato): ?>
+                <td>
+                    <?= htmlspecialchars($dato) ?>
+                </td>
+                <?php endforeach; ?>
+                <td>
+                    <form action="insert.php" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="<?= $fila[array_key_first($fila)] ?>">
+                        <button type="submit">Modificar</button>
+                    </form>
+                    <form action="delete.php" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="<?= $fila[array_key_first($fila)] ?>">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <form action="insertar.php" method="post">
+        <input type="hidden" name="tabla" value="<?= htmlspecialchars($tabla) ?>">
+        <button type="submit">Nuevo
+            <?= $tabla ?>
+        </button>
+    </form>
+</body>
+
+</html>

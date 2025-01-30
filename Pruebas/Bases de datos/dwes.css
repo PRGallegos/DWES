@@ -1,0 +1,77 @@
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Estilo del contenedor */
+#container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el encabezado de la página */
+h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Estilo para las celdas y bordes de la tabla */
+table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+/* Estilo de las cabeceras */
+th {
+    background-color: #f2f2f2;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo de las celdas */
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Estilo de las filas alternas */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Estilo al pasar el ratón por encima de las filas */
+tr:hover {
+    background-color: #e2e2e2;
+}
+
+/* Estilo para mensajes de error */
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Estilo del pie de página */
+#footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
