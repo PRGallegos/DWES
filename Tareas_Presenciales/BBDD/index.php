@@ -5,6 +5,9 @@ include 'db.php';
 // Obtener datos de la base de datos
 $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
+
+// Cerrar la conexión a la base de datos
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -14,25 +17,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP MySQL Data Table</title>
-    <style>
-        table {
-            width: 50%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-        }
-    </style>
+    <style src="styles.css"> </style>
 </head>
 
 <body>
@@ -59,27 +44,21 @@ $result = $conn->query($sql);
             </tr>
         </thead>
         <tbody>
-            <?php
-            // Mostrar los datos en la tabla
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['id']}</td>
-                            <td>{$row['name']}</td>
-                            <td>{$row['email']}</td>
-                        </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='3'>No data found</td></tr>";
-            }
-            ?>
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="3">No data found</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
 </body>
 
 </html>
-
-<?php
-// Cerrar la conexión a la base de datos
-$conn->close();
-?>

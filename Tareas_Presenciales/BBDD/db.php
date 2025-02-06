@@ -23,3 +23,4 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
 if ($conn->query($sql) === FALSE) {
     echo "Error creating table: " . $conn->error;
 }
+?>
