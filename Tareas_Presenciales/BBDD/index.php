@@ -14,12 +14,12 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Interface</title>
+    <title>Edit Database</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Hacker Database</h1>
+        <h1>Access Granted</h1>
 
         <!-- Mostrar mensajes de éxito o error -->
         <?php

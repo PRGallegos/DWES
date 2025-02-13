@@ -1,91 +1,51 @@
 <?php
 // Incluir el archivo de conexión a la base de datos
 include 'db.php';
-$conn = $dbConnection; // Asegurar que $dbConnection está definido en db.php
 
-// Verificar la conexión a la base de datos
+// Verificar si la conexión a la base de datos se estableció correctamente
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Función para redirigir con mensajes
-function redirect(string $message, string $messageType) {
-    header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
+// Función para redirigir con un mensaje
+function redirect($message, $type) {
+    header("Location: index.php?message=" . urlencode($message) . "&messageType=$type");
     exit();
 }
 
 // Procesar eliminación de usuario
 if (isset($_GET['delete'])) {
-    $userId = intval($_GET['delete']); // Convertir a entero para seguridad
+    $userId = $_GET['delete'];
+    $sql = "DELETE FROM users WHERE id=$userId";
 
-    if ($userId <= 0) {
-        redirect("Invalid user ID", "error");
-    }
-
-    $sql = "DELETE FROM users WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    
-    if ($stmt === false) {
-        redirect("Error preparing statement: " . $conn->error, "error");
-    }
-
-    $stmt->bind_param("i", $userId);
-
-    if ($stmt->execute()) {
+    if ($conn->query($sql)) {
         redirect("User deleted successfully", "success");
     } else {
-        redirect("Error deleting user: " . $stmt->error, "error");
+        redirect("Error deleting user: " . $conn->error, "error");
     }
-
-    $stmt->close();
 }
 
 // Procesar inserción o actualización de usuario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $userId = isset($_POST['userId']) ? intval($_POST['userId']) : 0;
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
+    $userId = $_POST['userId'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
 
-    if (empty($name) || empty($email)) {
-        redirect("Name and email are required", "error");
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        redirect("Invalid email format", "error");
-    }
-
-    if ($userId <= 0) {
+    if (empty($userId)) {
         // Insertar nuevo usuario
-        $sql = "INSERT INTO users (name, email) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        
-        if ($stmt === false) {
-            redirect("Error preparing statement: " . $conn->error, "error");
-        }
-
-        $stmt->bind_param("ss", $name, $email);
+        $sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
     } else {
         // Actualizar usuario existente
-        $sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        
-        if ($stmt === false) {
-            redirect("Error preparing statement: " . $conn->error, "error");
-        }
-
-        $stmt->bind_param("ssi", $name, $email, $userId);
+        $sql = "UPDATE users SET name='$name', email='$email' WHERE id=$userId";
     }
 
-    if ($stmt->execute()) {
-        $message = $userId <= 0 ? "User added successfully" : "User updated successfully";
-        redirect($message, "success");
+    if ($conn->query($sql)) {
+        redirect("Operation successful", "success");
     } else {
-        redirect("Error: " . $stmt->error, "error");
+        redirect("Error: " . $conn->error, "error");
     }
-
-    $stmt->close();
 }
 
-// Cerrar la conexión globalmente si no hubo redirección antes
+// Cerrar la conexión a la base de datos
 $conn->close();
 ?>
