@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
 
-    // Insertar datos en la base de datos
+    // Insertar datos 
     $sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
 
     if ($conn->query($sql) === TRUE) {
@@ -21,6 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 
-// Cerrar la conexión a la base de datos
+// Cerrar la conexión 
 $conn->close();
 ?>

@@ -1,8 +1,8 @@
 <?php
-// Incluir el archivo de conexión a la base de datos
+// Importar conexión con la BD
 include 'db.php';
 
-// Obtener datos de la base de datos
+// Datos de la BD
 $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
 
@@ -10,14 +10,16 @@ $result = $conn->query($sql);
 $conn->close();
 ?>
 
+<!-- *************************************************************************** -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP MySQL Data Table</title>
-    <style src="styles.css"> </style>
+    <title>PHP con MySQL</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
