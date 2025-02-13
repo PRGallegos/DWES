@@ -23,44 +23,52 @@ $conn->close();
 </head>
 
 <body>
-    <h1>Add Data to Database</h1>
-    <!-- Formulario para añadir datos -->
-    <form action="process.php" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br><br>
-        <button type="submit">Add User</button>
-    </form>
+<div class="container">
 
-    <h2>Users Table</h2>
-    <!-- Tabla para mostrar los datos -->
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['name']; ?></td>
-                        <td><?php echo $row['email']; ?></td>
-                    </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
+        <h1>Conected to the Database</h1>
+        <!-- Formulario para agregar usuarios -->
+        <form id="userForm" onsubmit="return submitForm(event)">
+            <input type="hidden" id="userId" name="userId">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit" id="submitBtn">Add User</button>
+        </form>
+
+        <h2>Users Table</h2>
+        <!-- Tabla de usuarios -->
+        <table id="userTable">
+            <thead>
                 <tr>
-                    <td colspan="3">No data found</td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr id="row-<?php echo $row['id']; ?>">
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['name']; ?></td>
+                            <td><?php echo $row['email']; ?></td>
+                            <td>
+                                <button onclick="editUser(<?php echo $row['id']; ?>, '<?php echo $row['name']; ?>', '<?php echo $row['email']; ?>')">Edit</button>
+                                <button onclick="deleteUser(<?php echo $row['id']; ?>)">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="4">No data found</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <Script SRc="script.js"></Script>
 </body>
 
 </html>

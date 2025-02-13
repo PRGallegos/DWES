@@ -2,25 +2,37 @@
 // Incluir el archivo de conexión a la base de datos
 include 'db.php';
 
-// Obtener datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userId = $_POST['userId'];
     $name = $_POST['name'];
     $email = $_POST['email'];
 
-    // Insertar datos 
-    $sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+    if (empty($userId)) {
+        // Insertar nuevo usuario
+        $sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        // Actualizar usuario existente
+        $sql = "UPDATE users SET name='$name', email='$email' WHERE id=$userId";
     }
 
-    // Redirigir de vuelta al índice
-    header("Location: index.php");
-    exit();
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["status" => "success", "message" => "Operation successful"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Error: " . $sql . "<br>" . $conn->error]);
+    }
 }
 
-// Cerrar la conexión 
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['delete'])) {
+    $userId = $_GET['delete'];
+    $sql = "DELETE FROM users WHERE id=$userId";
+
+    if ($conn->query($sql)) {
+        echo json_encode(["status" => "success", "message" => "User deleted"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Error deleting user"]);
+    }
+}
+
 $conn->close();
+
 ?>
