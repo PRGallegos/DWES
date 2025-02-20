@@ -1,9 +1,8 @@
 <?php
-// Configuración de la base de datos
-$servername = "localhost"; // Servidor (spoiler no hay, trabajamos en local :D )
-$username = "root";        // Nombre de usuario 
-$password = "";            // Contraseña o contrasenia para los guiris
-$dbname = "test_db";       // Nombre 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "test_db";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
