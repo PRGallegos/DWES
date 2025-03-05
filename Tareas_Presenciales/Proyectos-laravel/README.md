@@ -9,8 +9,8 @@ cd MiProyecto
 # Configura la base de datos en .env
 
 DB_DATABASE=mi_base_de_datos
-DB_USERNAME=usuario
-DB_PASSWORD=contraseña
+DB_USERNAME=user
+DB_PASSWORD=password
 
 # Genera el modelo y la migración
 
